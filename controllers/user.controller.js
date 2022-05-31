@@ -35,7 +35,7 @@ exports.addUser = async(req,res) =>{
 
 
 
-exports.getAllUsers = async(req,res) =>{
+exports.getAllUsers = async (req,res) =>{
     try {
         const users = await userSchema.find();
         if(users.length == 0){
@@ -67,7 +67,7 @@ exports.getOneUser = async(req,res) =>{
 
 exports.deleteOneUser = async(req,res) =>{
     const {id} = req.params;
-    console.log(id)
+    
     try {
         const user = await userSchema.findByIdAndDelete(id);
         if(!user){
@@ -82,7 +82,7 @@ exports.deleteOneUser = async(req,res) =>{
 exports.updateOneUser = async(req,res) =>{
     const {id} = req.params;
     try {
-        const user = await userSchema.findByIdAndUpdate(id,{$set:{...req.body}});
+        const user = await userSchema.findOneAndUpdate({_id:id},{$set:{...req.body}});
         if(!user){
             return res.status(400).send({msg:'User not exist...'});
         }
